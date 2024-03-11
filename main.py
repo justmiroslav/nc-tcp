@@ -1,8 +1,9 @@
-import requests
+import requests, os
 from fetch_url import country_language_dict
+api_key = os.environ.get("IP_API_KEY")
 command_message = 'Enter command (1: - help; 2 - lang; 3 - city; 4 - exit): '
-help_message = ('Command 2(lang) - Enter the country name to get the language.\n'
-                'Command 3(city) - Enter the ip address to get the city.\n'
+help_message = ('Command 2(lang) - Enter the country name to get the language;\n'
+                'Command 3(city) - Enter the ip address to get the city;\n'
                 'Command 4(exit) - Exit the program.')
 
 def process_lang():
@@ -18,10 +19,11 @@ def process_lang():
 def process_city():
     ip_address = input('Enter the ip address: ').strip().replace(" ", "")
     try:
-        url = f"https://ipapi.co/{ip_address}/json/"
+        # url = f"https://api.2ip.ua/geo.json?ip={ip_address}"
+        url = f"https://api.ip2location.io/?key={api_key}&ip={ip_address}"
         response = requests.get(url)
         data = response.json()
-        print(data['city'])
+        print(data['city_name'])
     except KeyError:
         print("Ip address not found.")
 
@@ -38,7 +40,7 @@ def main():
             print('Exiting the program...')
             break
         else:
-            print('Unknown command')
+            print('Unknown command.')
 
 if __name__ == '__main__':
     main()
