@@ -16,9 +16,9 @@ def process_lang():
         print("Country not found.")
 
 def process_city():
-    ip_address = input('Enter the ip address: ')
+    ip_address = input('Enter the ip address: ').replace(" ", "")
     try:
-        url = f"https://ipapi.co/{ip_address.replace(" ", "")}/json/"
+        url = f"https://ipapi.co/{ip_address}/json/"
         response = requests.get(url)
         data = response.json()
         print(data['city'])
