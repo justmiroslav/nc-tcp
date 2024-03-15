@@ -15,14 +15,14 @@ def process_lang(country_name):
         print("Country not found.")
 
 def process_city(ip_address):
-    try:
-        # url = f"https://api.2ip.ua/geo.json?ip={ip_address}"
-        url = f"https://api.ip2location.io/?key={api_key}&ip={ip_address}"
-        response = requests.get(url)
-        data = response.json()
-        print(data['city_name'])
-    except KeyError:
-        print("Ip address not found.")
+    chunks = ip_address.split('.')
+    if len(chunks) != 4 or not all(chunk.isdigit() and 0 <= int(chunk) <= 255 for chunk in chunks):
+        print("Invalid ip address.")
+        return
+    url = f"https://api.ip2location.io/?key={api_key}&ip={ip_address}"
+    response = requests.get(url)
+    data = response.json()
+    print(data['city_name'])
 
 def main():
     while True:
